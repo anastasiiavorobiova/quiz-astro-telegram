@@ -1,0 +1,7 @@
+{
+  "extends": ["stylelint-config-html/astro"],
+  "rules": {
+    "block-no-empty": true,
+    "color-no-invalid-hex": true
+  }
+}
