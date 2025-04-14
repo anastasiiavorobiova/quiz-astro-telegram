@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
-.hello {
-  color: red;
+@layer components {
+  .container {
+    @apply mx-auto max-w-7xl px-8;
+  }
+
+  .btn {
+    @apply inline-flex justify-center items-center px-5 py-2 bg-teal-500 hover:cursor-pointer hover:bg-teal-600 transition-all uppercase;
+  }
+
+  .input {
+    @apply border py-2.5 px-2 w-full transition-all focus:outline-none;
+  }
 }
