@@ -1,0 +1,26 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [
+    ".astro/types.d.ts",
+    ".astro/actions.d.ts",
+    ".astro/content.d.ts",
+    ".astro/env.d.ts",
+    "**/*",
+    ".prettierrc.mjs",
+    "src/app/types/global.d.ts",
+    "src/app/types/env.d.ts"
+  ],
+  "exclude": ["dist/**/*", ".astro/**/*"],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "moduleResolution": "bundler",
+    "allowJs": true,
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "baseUrl": "./"
+  }
+}

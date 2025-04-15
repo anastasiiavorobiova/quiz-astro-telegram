@@ -1,0 +1,11 @@
+node_modules
+dist
+.astro
+*.ts
+*.tsx
+*.svg
+*.json
+*.mjs
+*.md
+*.webp
+coverage
