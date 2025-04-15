@@ -57,6 +57,10 @@ jobs:
         with:
           path: ~/.npm
           key: node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name:
+        run: apk add --no-cache libc6-compat
+      - name:
+        run: apk update
       - name: Install dependencies
         run: npm i
       - name: Build app
