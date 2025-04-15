@@ -1,4 +1,5 @@
 import { type InputHTMLAttributes, forwardRef } from "react";
+import classnames from "classnames";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -22,14 +23,19 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     } = props;
 
     return (
-      <div className={`flex flex-col ${className}`}>
+      <div className={classnames("flex flex-col", className)}>
         {label && <label className="block mb-2">{label}</label>}
         <div className="relative">
           <input
             {...inputOther}
             type={type}
             placeholder={placeholder}
-            className={`input ${error && "border-red-600 focus:border-red-600"} ${touched && !error && "border-teal-500 focus:border-teal-500"}`}
+            className={classnames("input", {
+              ["border-red-600"]: error,
+              ["focus:border-red-600"]: error,
+              ["border-teal-500 "]: touched && !error,
+              ["focus:border-teal-500"]: touched && !error,
+            })}
             ref={ref}
             autoComplete="off"
           />

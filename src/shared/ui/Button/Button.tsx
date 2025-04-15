@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes } from "react";
+import classnames from "classnames";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   type?: "button" | "reset" | "submit";
@@ -16,7 +17,7 @@ export function Button({
   return (
     <button
       type={type}
-      className={`btn ${className}`}
+      className={classnames("btn", className)}
       {...other}
       onClick={onClick}
     >

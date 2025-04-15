@@ -1,11 +1,8 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
-
-import react from '@astrojs/react';
-
-import tailwindcss from '@tailwindcss/vite';
-
-import netlify from '@astrojs/netlify';
+import { defineConfig } from "astro/config";
+import react from "@astrojs/react";
+import tailwindcss from "@tailwindcss/vite";
+import netlify from "@astrojs/netlify";
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,14 +12,14 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  output: 'server',
+  output: "server",
 
   image: {
-    domains: ['astro.build'],
+    domains: ["astro.build"],
   },
 
   build: {
-    assets: 'assets',
+    assets: "assets",
   },
 
   security: {
@@ -30,7 +27,7 @@ export default defineConfig({
   },
 
   prefetch: {
-    defaultStrategy: 'hover',
+    defaultStrategy: "hover",
   },
 
   adapter: netlify(),
