@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input, Toast } from "@/shared/ui";
 import { signUpSchema, type TSignUpSchema } from "../model";
 import { useEffect, useState } from "react";
+import { navigate } from "astro:transitions/client";
 
 export function SignupForm() {
   const [message, setMessage] = useState("");
@@ -34,6 +35,8 @@ export function SignupForm() {
       setMessage(
         `${data.data.message}. You will receive the email to confirm your account.`,
       );
+
+      navigate("/", { history: "replace" });
     }
   };
 

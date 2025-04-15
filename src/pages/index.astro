@@ -1,5 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const { user } = Astro.locals;
+const isAdmin = user && user.role === "admin";
+const isUser = user && user.role === "user";
 ---
 
 <Layout>
@@ -7,15 +11,56 @@ import Layout from "../layouts/Layout.astro";
     <div class="container">
       <h1 class="text-7xl font-bold tracking-wider capitalize">Quiz app</h1>
 
-      <p class="mt-2 text-lg tracking-wide">
-        Let's take a short quiz! If you already have an account, you can login
-        here. Or create a new account by clicking on the sign up button
-      </p>
+      {
+        !user && (
+          <p class="mt-2 text-lg tracking-wide">
+            Let's take a short quiz! If you already have an account, you can
+            login here. Or create a new account by clicking on the sign up
+            button
+          </p>
+        )
+      }
 
-      <div class="flex gap-6 mt-4">
-        <a href="/login" class="btn">Login</a>
-        <a href="/signup" class="btn">Sign up</a>
-      </div>
+      {
+        !user && (
+          <div class="flex gap-6 mt-4">
+            <a href="/login" class="btn">
+              Login
+            </a>
+            <a href="/signup" class="btn">
+              Sign up
+            </a>
+          </div>
+        )
+      }
+
+      {
+        user && (
+          <h2 class="text-2xl font-bold capitalize tracking-wide mt-2">
+            Welcome {user.role}!
+          </h2>
+        )
+      }
+
+      {
+        isAdmin && (
+          <div class="flex gap-6 mt-4">
+            <a href="/dashboard" class="btn">
+              Admin dashboard
+            </a>
+          </div>
+        )
+      }
+
+      {
+        isUser && (
+          <div class="flex gap-6 mt-4">
+            <a href="/quiz" class="btn">
+              Start quiz
+            </a>
+          </div>
+        )
+      }
     </div>
   </section>
 </Layout>
