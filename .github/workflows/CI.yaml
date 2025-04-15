@@ -10,6 +10,8 @@ on:
     branches: [main, develop]
     paths-ignore:
       - ".github/**"
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
 jobs:
   lint-app:
