@@ -23,3 +23,15 @@ export const Session = pgTable("sessions", {
 
 export type InsertSession = typeof Session.$inferInsert;
 export type SelectSession = typeof Session.$inferSelect;
+
+export const EmailVerificationToken = pgTable("email_verification_token", {
+  id: text("id").notNull().primaryKey(),
+  userId: text("user_id").references(() => User.id, { onDelete: "cascade" }),
+  expiresAt: timestamp("expires_at").notNull(),
+  email: text("email").notNull(),
+});
+
+export type InsertEmailVerificationToken =
+  typeof EmailVerificationToken.$inferInsert;
+export type SelectEmailVerificationToken =
+  typeof EmailVerificationToken.$inferSelect;

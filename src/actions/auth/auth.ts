@@ -4,7 +4,13 @@ import { defineAction, ActionError } from "astro:actions";
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { User } from "@/schema";
-import { signUpSchema, lucia, loginSchema } from "@/features/auth";
+import {
+  signUpSchema,
+  lucia,
+  loginSchema,
+  createEmailVerificationToken,
+} from "@/features/auth";
+import { emailVerificationHTML, sendEmail } from "@/shared/lib/email";
 
 export const auth = {
   createUser: defineAction({
@@ -46,6 +52,21 @@ export const auth = {
           email: input.email,
           username: input.email,
           passwordHash: hashedPassword,
+        });
+
+        const verificationToken = await createEmailVerificationToken(
+          userId,
+          input.email,
+        );
+
+        const appUrl =
+          import.meta.env.APP_URL || import.meta.env.PUBLIC_APP_URL;
+        const verificationLink = `${appUrl}/api/verify-token.json?${verificationToken}`;
+
+        await sendEmail({
+          email: input.email,
+          html: emailVerificationHTML(verificationLink),
+          subject: "Email verification",
         });
 
         const session = await lucia.createSession(userId, {});
