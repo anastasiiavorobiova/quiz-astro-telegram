@@ -4,7 +4,7 @@ import type { APIContext, MiddlewareNext } from "astro";
 
 const publicOnly = ["/signup", "/login"];
 const adminOnly = ["/dashboard"];
-const userOnly = ["/quiz"];
+const userOnly = ["/quiz", "/success"];
 const loginPage = "/login";
 
 export async function getUser(

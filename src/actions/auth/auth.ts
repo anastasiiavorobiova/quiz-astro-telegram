@@ -162,4 +162,40 @@ export const auth = {
       }
     },
   }),
+  logout: defineAction({
+    handler: async (_input, ctx) => {
+      try {
+        if (!ctx.locals.session) {
+          throw new ActionError({
+            code: "UNAUTHORIZED",
+            message: "No active session found",
+          });
+        }
+
+        await lucia.invalidateSession(ctx.locals.session.id);
+
+        const sessionCookie = lucia.createBlankSessionCookie();
+
+        ctx.cookies.set(
+          sessionCookie.name,
+          sessionCookie.value,
+          sessionCookie.attributes,
+        );
+
+        return { error: null, data: { message: "User has been logged out" } };
+      } catch (err) {
+        if (err instanceof ActionError && err.code === "UNAUTHORIZED") {
+          throw new ActionError({
+            code: "UNAUTHORIZED",
+            message: "No active session found",
+          });
+        }
+
+        throw new ActionError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Something went wrong",
+        });
+      }
+    },
+  }),
 };
