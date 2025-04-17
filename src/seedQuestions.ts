@@ -12,15 +12,15 @@ async function main() {
       choices: ["kindness", "curiosity", "justice", "intelligence"],
     },
     {
-      question: "People would describe you as",
+      question: "People would describe you as...",
       choices: ["active", "strong", "emotional", "brave"],
     },
     {
-      question: "Your guilty pleasure is",
+      question: "Your guilty pleasure is...",
       choices: ["food", "romance", "planning murder", "fighting social issues"],
     },
     {
-      question: "Your sense of humor is",
+      question: "Your sense of humor is...",
       choices: ["stupid", "dry", "smart", "sarcastic"],
     },
   ];
