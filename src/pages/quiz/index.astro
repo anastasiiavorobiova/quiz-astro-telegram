@@ -1,1 +1,31 @@
-<h1>Quiz</h1>
+---
+import { eq } from "drizzle-orm";
+import Layout from "@/layouts/Layout.astro";
+import { Quiz } from "@/features/quiz";
+import { db } from "@/db";
+import {
+  Question,
+  QuestionChoice,
+  type SelectQuestion,
+  type SelectQuestionChoice,
+} from "@/schema";
+
+const quizData = (await db
+  .select()
+  .from(Question)
+  .leftJoin(
+    QuestionChoice,
+    eq(Question.id, QuestionChoice.questionId),
+  )) as Array<{
+  questions: SelectQuestion;
+  questions_choices: SelectQuestionChoice;
+}>;
+---
+
+<Layout>
+  <div class="container">
+    <a href="/" class="inline-block text-teal-500 underline mb-6">Home</a>
+    <h2 class="text-3xl font-bold tracking-wider capitalize mb-6">Quiz</h2>
+    <Quiz client:load questions={quizData} />
+  </div>
+</Layout>
