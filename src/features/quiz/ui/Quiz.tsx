@@ -1,11 +1,11 @@
+import { actions } from "astro:actions";
+import { useState } from "react";
+import { toastStore } from "@/features/toasts";
 import type {
   SelectQuestion,
   SelectQuestionChoice,
   SelectAnswer,
 } from "@/schema";
-import { Toast } from "@/shared/ui";
-import { actions } from "astro:actions";
-import { useState } from "react";
 
 type Props = {
   questions: Array<{
@@ -15,8 +15,6 @@ type Props = {
 };
 
 export function Quiz({ questions }: Props) {
-  const [message, setMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(
     questions[currentIndex],
@@ -51,13 +49,19 @@ export function Quiz({ questions }: Props) {
     const { error, data } = await actions.quiz.sendResults(answers);
 
     if (error) {
-      setErrorMessage(`Error ${error.status}: Cant't send your quiz results`);
+      toastStore.set({
+        message: `Error ${error.status}: Cant't send your quiz results`,
+        status: "error",
+      });
 
       return;
     }
 
     if (!error && data) {
-      setMessage(`${data.data.message}.`);
+      toastStore.set({
+        message: `${data.data.message}.`,
+        status: "success",
+      });
     }
   };
 
@@ -132,7 +136,7 @@ export function Quiz({ questions }: Props) {
         <button
           type="button"
           className="btn"
-          disabled={isNextDisabled || Boolean(message) || Boolean(errorMessage)}
+          disabled={isNextDisabled}
           onClick={sendAnswers}
         >
           finish
@@ -146,16 +150,6 @@ export function Quiz({ questions }: Props) {
         >
           next
         </button>
-      )}
-      {message && (
-        <Toast status="success" className="w-full mt-8">
-          {message}
-        </Toast>
-      )}
-      {errorMessage && (
-        <Toast status="error" className="w-full mt-8">
-          {errorMessage}
-        </Toast>
       )}
     </div>
   );
