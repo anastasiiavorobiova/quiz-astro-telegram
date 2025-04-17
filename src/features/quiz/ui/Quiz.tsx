@@ -64,7 +64,7 @@ export function Quiz({ questions }: Props) {
         status: "success",
       });
 
-      navigate("/");
+      navigate("/success");
     }
   };
 

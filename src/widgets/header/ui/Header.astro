@@ -1,1 +1,11 @@
-<header class="min-h-20 flex items-center container">Quiz App</header>
+---
+import { Logout } from "@/features/auth";
+
+const { user } = Astro.locals;
+const { url } = Astro;
+---
+
+<header class="flex items-center justify-between container py-8">
+  <a href="/" class="text-teal-500 font-bold text-4xl"> Quiz App </a>
+  {user && <Logout client:load redirectUrl={url.toString()} />}
+</header>
