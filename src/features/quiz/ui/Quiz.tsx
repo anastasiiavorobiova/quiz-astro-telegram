@@ -1,4 +1,5 @@
 import { actions } from "astro:actions";
+import { navigate } from "astro:transitions/client";
 import { useState } from "react";
 import { toastStore } from "@/features/toasts";
 import type {
@@ -62,6 +63,8 @@ export function Quiz({ questions }: Props) {
         message: `${data.data.message}.`,
         status: "success",
       });
+
+      navigate("/");
     }
   };
 
