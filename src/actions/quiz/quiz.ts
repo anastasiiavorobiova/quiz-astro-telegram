@@ -1,4 +1,5 @@
 import { db } from "@/db";
+import { lucia } from "@/features/auth";
 import { Answer, type InsertAnswer } from "@/schema";
 import { ActionError, defineAction } from "astro:actions";
 import { eq } from "drizzle-orm";
@@ -7,7 +8,11 @@ export const quiz = {
   sendResults: defineAction({
     handler: async (input, ctx) => {
       try {
-        if (!ctx.locals.user) {
+        const sessionId = ctx.locals.session?.id || "";
+        const { session, user } = await lucia.validateSession(sessionId);
+        const isUser = user && user.role === "user";
+
+        if (!isUser || !session) {
           throw new ActionError({
             code: "UNAUTHORIZED",
             message: "Please, sign in",
