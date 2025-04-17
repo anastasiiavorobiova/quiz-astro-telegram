@@ -1,1 +1,37 @@
-<h1>Admin dashboard</h1>
+---
+import { db } from "@/db";
+import { Answer, Question, User } from "@/schema";
+import { eq } from "drizzle-orm";
+import Layout from "@/layouts/Layout.astro";
+import { UsersTable } from "@/features/admin";
+
+const users = await db
+  .select({
+    email: User.email,
+    answer: Answer.answer,
+    question: Question.question,
+  })
+  .from(User)
+  .where(eq(User.role, "user"))
+  .leftJoin(Answer, eq(Answer.userId, User.id))
+  .leftJoin(Question, eq(Question.id, Answer.questionId));
+
+const usersMap = new Map();
+
+users.forEach((user) => {
+  const prev = usersMap.get(user.email) || [];
+
+  usersMap.set(user.email, [...prev, [user.question, user.answer]]);
+});
+---
+
+<Layout>
+  <div class="container">
+    <a href="/" class="inline-block text-teal-500 underline mb-6">Home</a>
+    <h2 class="text-3xl font-bold tracking-wider capitalize mb-6">
+      Admin dashboard
+    </h2>
+
+    <UsersTable client:load usersMap={usersMap} />
+  </div>
+</Layout>

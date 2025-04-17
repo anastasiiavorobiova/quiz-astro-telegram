@@ -16,6 +16,7 @@ export const lucia = new Lucia(adapter, {
     return {
       role: attributes.role,
       email: attributes.email,
+      emailVerified: attributes.emailVerified,
     };
   },
 });
@@ -23,6 +24,7 @@ export const lucia = new Lucia(adapter, {
 interface DatabaseUserAttributes {
   role: string;
   email: string;
+  emailVerified: boolean;
 }
 
 declare module "lucia" {

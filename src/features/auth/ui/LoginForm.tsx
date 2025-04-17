@@ -1,15 +1,13 @@
+import { useEffect } from "react";
+import { navigate } from "astro:transitions/client";
 import { actions } from "astro:actions";
 import { useForm } from "react-hook-form";
-import { loginSchema, type TLoginSchema } from "../model";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input, Toast } from "@/shared/ui";
-import { useEffect, useState } from "react";
-import { navigate } from "astro:transitions/client";
+import { toastStore } from "@/features/toasts";
+import { Button, Input } from "@/shared/ui";
+import { loginSchema, type TLoginSchema } from "../model";
 
 export function LoginForm() {
-  const [message, setMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-
   const {
     register,
     handleSubmit,
@@ -26,13 +24,19 @@ export function LoginForm() {
     });
 
     if (error) {
-      setErrorMessage(`Error ${error.status}: Cant't login a user`);
+      toastStore.set({
+        message: `Error ${error.status}: Cant't login a user`,
+        status: "error",
+      });
 
       return;
     }
 
     if (!error && data) {
-      setMessage(`${data.data.message}.`);
+      toastStore.set({
+        message: `${data.data.message}.`,
+        status: "success",
+      });
 
       navigate("/", { history: "replace" });
     }
@@ -69,16 +73,6 @@ export function LoginForm() {
           Login
         </Button>
       </div>
-      {message && (
-        <Toast status="success" className="w-full mt-8">
-          {message}
-        </Toast>
-      )}
-      {errorMessage && (
-        <Toast status="error" className="w-full mt-8">
-          {errorMessage}
-        </Toast>
-      )}
     </form>
   );
 }

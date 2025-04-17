@@ -1,15 +1,13 @@
 import { actions } from "astro:actions";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input, Toast } from "@/shared/ui";
+import { toastStore } from "@/features/toasts";
+import { Button, Input } from "@/shared/ui";
 import { signUpSchema, type TSignUpSchema } from "../model";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { navigate } from "astro:transitions/client";
 
 export function SignupForm() {
-  const [message, setMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-
   const {
     register,
     handleSubmit,
@@ -26,15 +24,19 @@ export function SignupForm() {
     });
 
     if (error) {
-      setErrorMessage(`Error ${error.status}: Cant't register a user`);
+      toastStore.set({
+        message: `Error ${error.status}: Cant't register a user`,
+        status: "error",
+      });
 
       return;
     }
 
     if (!error && data) {
-      setMessage(
-        `${data.data.message}. You will receive the email to confirm your account.`,
-      );
+      toastStore.set({
+        message: `${data.data.message}. You will receive the email to confirm your account.`,
+        status: "success",
+      });
 
       navigate("/", { history: "replace" });
     }
@@ -86,16 +88,6 @@ export function SignupForm() {
           Signup
         </Button>
       </div>
-      {message && (
-        <Toast status="success" className="w-full mt-8">
-          {message}
-        </Toast>
-      )}
-      {errorMessage && (
-        <Toast status="error" className="w-full mt-8">
-          {errorMessage}
-        </Toast>
-      )}
     </form>
   );
 }

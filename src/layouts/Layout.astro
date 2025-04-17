@@ -1,5 +1,6 @@
 ---
 import "@/app/styles/global.css";
+import { Toast } from "@/features/toasts";
 import { Header } from "@/widgets/header";
 ---
 
@@ -15,5 +16,8 @@ import { Header } from "@/widgets/header";
   <body>
     <Header />
     <slot />
+    <div class="container">
+      <Toast client:load />
+    </div>
   </body>
 </html>
