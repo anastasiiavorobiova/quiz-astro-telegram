@@ -33,7 +33,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             className={classnames("input", {
               ["border-red-600"]: error,
               ["focus:border-red-600"]: error,
-              ["border-teal-500 "]: touched && !error,
+              ["border-teal-500"]: touched && !error,
               ["focus:border-teal-500"]: touched && !error,
             })}
             ref={ref}
