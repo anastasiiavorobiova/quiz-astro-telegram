@@ -1,9 +1,9 @@
 /* eslint-disable */
 import { Telegraf } from "telegraf";
-import { BOT_TOKEN, APP_URL } from "./config";
+// import { BOT_TOKEN, APP_URL } from "./config";
 import type { Handler } from "@netlify/functions";
-// const BOT_TOKEN = process.env.BOT_TOKEN || "";
-// const APP_URL = process.env.APP_URL || "";
+const BOT_TOKEN = process.env.BOT_TOKEN || "";
+const APP_URL = process.env.APP_URL || "";
 
 if (!BOT_TOKEN) {
   throw new Error("BOT_TOKEN must be provided!");
