@@ -60,10 +60,8 @@ process.once("SIGTERM", () => bot.stop("SIGTERM"));
 
 export const handler: Handler = async (event) => {
   try {
-    console.log(event.body);
-    const body = event.body || "";
-
-    await bot.handleUpdate(JSON.parse(body));
+    // @ts-ignore
+    await bot.handleUpdate(JSON.parse(event.body));
 
     return { statusCode: 200, body: "" };
   } catch (e) {
