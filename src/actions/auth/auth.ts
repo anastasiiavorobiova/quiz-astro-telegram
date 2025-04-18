@@ -61,7 +61,7 @@ export const auth = {
 
         const appUrl =
           import.meta.env.APP_URL || import.meta.env.PUBLIC_APP_URL;
-        const verificationLink = `${appUrl}/api/verify-token.json?${verificationToken}`;
+        const verificationLink = `${appUrl}api/verify-token.json?${verificationToken}`;
 
         await sendEmail({
           email: input.email,

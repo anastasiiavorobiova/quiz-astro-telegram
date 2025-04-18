@@ -1,10 +1,6 @@
 /* eslint-disable */
 import { Telegraf } from "telegraf";
-// import { BOT_TOKEN, APP_URL } from "./config";
-import type { Handler } from "@netlify/functions";
-
-const BOT_TOKEN = process.env.BOT_TOKEN || "";
-const APP_URL = process.env.APP_URL || "";
+import { BOT_TOKEN, APP_URL } from "./config";
 
 if (!BOT_TOKEN) {
   throw new Error("BOT_TOKEN must be provided!");
@@ -19,6 +15,7 @@ bot.command("start", (ctx: any) => {
       "Welcome to AstroAppQuizBot! 🚀\nUse /help to see available commands.",
     );
   } catch (err) {
+    ctx.reply("Start error");
     console.log("Start error", err);
   }
 });
@@ -32,6 +29,7 @@ bot.command("help", (ctx: any) => {
         "/webapp - Open the Mini App",
     );
   } catch (err) {
+    ctx.reply("Help error");
     console.log("Help error", err);
   }
 });
@@ -46,30 +44,15 @@ bot.command("webapp", (ctx: any) => {
       },
     });
   } catch (err) {
+    ctx.reply("Web app error");
     console.log("Web app error", err);
   }
 });
 
-// bot.launch().then(() => {
-//   console.log("Bot is running...");
-// });
+bot.launch().then(() => {
+  console.log("Bot is running...");
+});
 
 // Enable graceful stop
 process.once("SIGINT", () => bot.stop("SIGINT"));
 process.once("SIGTERM", () => bot.stop("SIGTERM"));
-
-export const handler: Handler = async (event) => {
-  try {
-    // @ts-ignore
-    await bot.handleUpdate(JSON.parse(event.body));
-
-    return { statusCode: 200, body: "" };
-  } catch (e) {
-    console.error("error in handler:", e);
-
-    return {
-      statusCode: 400,
-      body: "This endpoint is meant for bot and telegram communication",
-    };
-  }
-};
