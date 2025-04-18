@@ -8,10 +8,6 @@ import netlify from "@astrojs/netlify";
 export default defineConfig({
   integrations: [react()],
 
-  vite: {
-    plugins: [tailwindcss()],
-  },
-
   output: "server",
 
   image: {
@@ -31,4 +27,8 @@ export default defineConfig({
   },
 
   adapter: netlify(),
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

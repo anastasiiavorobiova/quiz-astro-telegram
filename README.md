@@ -13,8 +13,8 @@ npm run dev
 
 ## To test the deployed version
 
-[Telegram](https://t.me/AstroAppQuizBot)
-[Netlify](https://quiz-astro-telegram-mini-app.netlify.app/)
+- [Telegram](https://t.me/AstroAppQuizBot)
+- [Netlify](https://quiz-astro-telegram-mini-app.netlify.app/)
 
 ## Technologies used:
 
