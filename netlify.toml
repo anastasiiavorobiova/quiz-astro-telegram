@@ -3,7 +3,7 @@
 
 [[redirects]]
   from = "/api/verify-token.json?*"
-  to = "/api/verify-token.json?*"
+  to = "/api/verify-token.json?:splat"
   status = 200
 
 [[redirects]]
