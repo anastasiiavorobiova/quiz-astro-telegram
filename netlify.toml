@@ -1,9 +1,5 @@
 [build]
-  publish = "dist"
-  functions = "netlify/functions"
-
-[functions]
-  node_bundler = "esbuild"
+  functions = "functions"
 
 [[redirects]]
   from = "/api/verify-token.json?*"
